@@ -1,509 +1,498 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Github, 
-  Linkedin, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Download, 
-  ExternalLink, 
-  Code2, 
-  Database, 
-  Terminal, 
-  Cpu, 
-  Moon, 
-  Sun, 
-  Menu, 
-  X,
-  Award,
-  BookOpen
-} from 'lucide-react';
-
-// --- Components ---
-
-const SectionTitle = ({ children, id }) => (
-  <h2 id={id} className="text-3xl md:text-4xl font-bold text-center mb-12 text-slate-800 dark:text-slate-100 scroll-mt-24">
-    <span className="border-b-4 border-blue-500 pb-2">{children}</span>
-  </h2>
-);
-
-const Badge = ({ children }) => (
-  <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium border border-blue-200 dark:border-blue-800 transition-all hover:bg-blue-200 dark:hover:bg-blue-900/50">
-    {children}
-  </span>
-);
-
-const Card = ({ children, className = "" }) => (
-  <div className={`bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-100 dark:border-slate-700 overflow-hidden hover:shadow-xl transition-shadow duration-300 ${className}`}>
-    {children}
-  </div>
-);
-
-export default function App() {
-  const [darkMode, setDarkMode] = useState(true);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  // Toggle Dark Mode
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [darkMode]);
-
-  const toggleTheme = () => setDarkMode(!darkMode);
-
-  // Smooth Scroll
-  const scrollToSection = (id) => {
-    setIsMenuOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const navLinks = [
-    { name: 'About', id: 'about' },
-    { name: 'Skills', id: 'skills' },
-    { name: 'Projects', id: 'projects' },
-    { name: 'Education', id: 'education' },
-    { name: 'Contact', id: 'contact' },
-  ];
-
-  return (
-    <div className={`min-h-screen font-sans transition-colors duration-300 ${darkMode ? 'dark bg-slate-900 text-slate-200' : 'bg-slate-50 text-slate-800'}`}>
-      
-      {/* --- Navbar --- */}
-      <nav className="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex-shrink-0 font-bold text-2xl tracking-tighter text-blue-600 dark:text-blue-400 cursor-pointer" onClick={() => window.scrollTo(0,0)}>
-              MS<span className="text-slate-800 dark:text-slate-100">.</span>
-            </div>
-            
-            {/* Desktop Menu */}
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-8">
-                {navLinks.map((link) => (
-                  <button
-                    key={link.name}
-                    onClick={() => scrollToSection(link.id)}
-                    className="hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                  >
-                    {link.name}
-                  </button>
-                ))}
-                <button 
-                  onClick={toggleTheme}
-                  className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
-                  aria-label="Toggle Theme"
-                >
-                  {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-                </button>
-              </div>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <div className="md:hidden flex items-center gap-4">
-              <button 
-                onClick={toggleTheme}
-                className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
-              >
-                {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-md text-slate-700 dark:text-slate-200 hover:text-blue-500 focus:outline-none"
-              >
-                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Menu Dropdown */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {navLinks.map((link) => (
-                <button
-                  key={link.name}
-                  onClick={() => scrollToSection(link.id)}
-                  className="block w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-500"
-                >
-                  {link.name}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-      </nav>
-
-      {/* --- Hero Section --- */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
-        <div className="flex-1 text-center md:text-left space-y-6">
-          <div className="inline-block px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-medium text-sm mb-4">
-            Available for Internships & Development Roles
-          </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-            Hi, I'm <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">
-              Manvendra Singh
-            </span>
-          </h1>
-          <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
-            A motivated <span className="font-semibold text-slate-900 dark:text-white">Computer Science Undergraduate</span> and <span className="font-semibold text-slate-900 dark:text-white">MERN Stack Developer</span> based in Prayagraj, India.
-          </p>
-          <p className="text-slate-500 dark:text-slate-400 max-w-xl">
-            Passionate about building scalable web applications, solving complex algorithmic problems, and exploring AI integrations.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start pt-4">
-            <a 
-              href="#contact" 
-              onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}
-              className="px-8 py-3.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-all shadow-lg shadow-blue-500/30 flex items-center gap-2"
-            >
-              <Mail size={18} /> Contact Me
-            </a>
-            <a 
-              href="/resume.pdf" 
-              download 
-              className="px-8 py-3.5 rounded-lg border border-slate-300 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 font-semibold transition-all flex items-center gap-2 bg-white dark:bg-slate-800"
-            >
-              <Download size={18} /> Download Resume
-            </a>
-          </div>
-
-          <div className="flex items-center gap-6 justify-center md:justify-start pt-6 text-slate-500 dark:text-slate-400">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900 dark:hover:text-white transition-colors">
-              <Github size={28} />
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-              <Linkedin size={28} />
-            </a>
-          </div>
-        </div>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manvendra Singh | CS Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3b82f6', // Blue-500
+                        secondary: '#1e293b', // Slate-800
+                        accent: '#0f172a', // Slate-900
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar for a developer feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
         
-        {/* Abstract/Tech visual representation */}
-        <div className="flex-1 w-full max-w-md md:max-w-full flex justify-center">
-            <div className="relative w-72 h-72 md:w-96 md:h-96">
-                <div className="absolute inset-0 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-                <div className="absolute top-0 -right-4 w-72 h-72 bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-                <div className="absolute -bottom-8 left-20 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-                
-                <div className="relative bg-white/10 dark:bg-slate-800/50 backdrop-blur-xl border border-white/20 dark:border-slate-700 rounded-2xl p-6 shadow-2xl transform rotate-3 hover:rotate-0 transition-all duration-500">
-                    <div className="space-y-4 font-mono text-sm text-slate-600 dark:text-slate-300">
-                        <div className="flex gap-2">
-                            <span className="text-pink-500">const</span>
-                            <span className="text-blue-500">developer</span>
-                            <span>=</span>
-                            <span className="text-yellow-500">{'{'}</span>
-                        </div>
-                        <div className="pl-4">
-                            name: <span className="text-green-500">'Manvendra'</span>,
-                        </div>
-                        <div className="pl-4">
-                            skills: [<span className="text-green-500">'MERN'</span>, <span className="text-green-500">'DSA'</span>],
-                        </div>
-                        <div className="pl-4">
-                            hardWorker: <span className="text-purple-500">true</span>,
-                        </div>
-                         <div className="pl-4">
-                            status: <span className="text-green-500">'Open to Work'</span>
-                        </div>
-                        <div className="text-yellow-500">{'}'};</div>
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-accent text-slate-300 font-sans antialiased selection:bg-primary selection:text-white">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-secondary/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-2xl font-bold text-white tracking-tighter">MS<span class="text-primary">.</span></a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#about" class="hover:text-primary transition-colors px-3 py-2 text-sm font-medium">About</a>
+                        <a href="#skills" class="hover:text-primary transition-colors px-3 py-2 text-sm font-medium">Skills</a>
+                        <a href="#projects" class="hover:text-primary transition-colors px-3 py-2 text-sm font-medium">Projects</a>
+                        <a href="#education" class="hover:text-primary transition-colors px-3 py-2 text-sm font-medium">Education</a>
+                        <a href="#contact" class="bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-all">Contact Me</a>
                     </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button id="mobile-menu-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-700 focus:outline-none">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
                 </div>
             </div>
         </div>
-      </section>
 
-      {/* --- About Section --- */}
-      <section id="about" className="py-20 bg-white dark:bg-slate-800/50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <SectionTitle id="about-title">Professional Summary</SectionTitle>
-          <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed text-center">
-            Motivated Computer Science undergraduate with strong problem-solving abilities and hands-on experience in full-stack web development using the <span className="font-bold text-blue-600 dark:text-blue-400">MERN stack</span>. Skilled in building scalable web applications, integrating APIs, and applying data structures and algorithms. Actively seeking internship or entry-level software development opportunities.
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-            {[
-                { icon: Code2, title: "Frontend", desc: "React, Tailwind, HTML5, CSS3" },
-                { icon: Database, title: "Backend", desc: "Node.js, Express, MongoDB, SQL" },
-                { icon: Terminal, title: "Problem Solving", desc: "DSA in C++, LeetCode, HackerRank" }
-            ].map((item, idx) => (
-                <div key={idx} className="p-6 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center hover:-translate-y-1 transition-transform">
-                    <div className="inline-flex p-3 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 mb-4">
-                        <item.icon size={24} />
-                    </div>
-                    <h3 className="font-bold text-lg mb-2">{item.title}</h3>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">{item.desc}</p>
-                </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* --- Skills Section --- */}
-      <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <SectionTitle>Technical Skills</SectionTitle>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Category 1 */}
-            <Card className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                    <Code2 className="text-blue-500" />
-                    <h3 className="font-bold text-xl">Languages</h3>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                    {['C', 'C++', 'JavaScript', 'SQL'].map(skill => (
-                        <Badge key={skill}>{skill}</Badge>
-                    ))}
-                </div>
-            </Card>
-
-            {/* Category 2 */}
-            <Card className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                    <Cpu className="text-purple-500" />
-                    <h3 className="font-bold text-xl">Frameworks</h3>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                    {['React.js', 'Node.js', 'Express.js', 'MongoDB', 'HTML', 'CSS'].map(skill => (
-                        <Badge key={skill}>{skill}</Badge>
-                    ))}
-                </div>
-            </Card>
-
-            {/* Category 3 */}
-            <Card className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                    <Terminal className="text-green-500" />
-                    <h3 className="font-bold text-xl">Tools</h3>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                    {['GitHub', 'VS Code', 'Postman', 'Vercel', 'Render'].map(skill => (
-                        <Badge key={skill}>{skill}</Badge>
-                    ))}
-                </div>
-            </Card>
-
-            {/* Category 4 */}
-            <Card className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                    <BookOpen className="text-yellow-500" />
-                    <h3 className="font-bold text-xl">Concepts</h3>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                    {['DSA', 'DBMS', 'OOPS', 'REST APIs', 'Authentication'].map(skill => (
-                        <Badge key={skill}>{skill}</Badge>
-                    ))}
-                </div>
-            </Card>
-        </div>
-      </section>
-
-      {/* --- Projects Section --- */}
-      <section id="projects" className="py-20 bg-slate-50 dark:bg-slate-800/30 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-            <SectionTitle>Featured Projects</SectionTitle>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                
-                {/* Project 1 */}
-                <Card className="flex flex-col h-full">
-                    <div className="p-8 flex-1">
-                        <div className="flex justify-between items-start mb-4">
-                            <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Virtual Assistant (JARVIS)</h3>
-                            <span className="text-sm font-mono text-slate-500">2024</span>
-                        </div>
-                        <p className="text-slate-600 dark:text-slate-300 mb-6">
-                            A full-stack AI-powered virtual assistant inspired by JARVIS. Integrates Google Gemini API for intelligent conversation and task management.
-                        </p>
-                        <ul className="space-y-2 mb-6 text-sm text-slate-600 dark:text-slate-400">
-                            <li className="flex gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></div>Secure authentication via JWT.</li>
-                            <li className="flex gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></div>RESTful API integration with Google Gemini.</li>
-                            <li className="flex gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></div>Deployed on Render for 24/7 availability.</li>
-                        </ul>
-                        <div className="flex flex-wrap gap-2 mt-auto">
-                            {['React.js', 'Node.js', 'Express', 'MongoDB', 'JWT', 'Gemini API'].map(tag => (
-                                <span key={tag} className="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded text-slate-600 dark:text-slate-300 font-mono">
-                                    {tag}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="p-6 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-700 flex gap-4">
-                        <a href="#" className="flex items-center gap-2 text-sm font-semibold hover:text-blue-600 transition-colors">
-                            <Github size={16} /> Source Code
-                        </a>
-                        <a href="#" className="flex items-center gap-2 text-sm font-semibold hover:text-blue-600 transition-colors">
-                            <ExternalLink size={16} /> Live Demo
-                        </a>
-                    </div>
-                </Card>
-
-                {/* Project 2 */}
-                <Card className="flex flex-col h-full">
-                    <div className="p-8 flex-1">
-                        <div className="flex justify-between items-start mb-4">
-                            <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Hotel Booking System</h3>
-                            <span className="text-sm font-mono text-slate-500">2025</span>
-                        </div>
-                        <p className="text-slate-600 dark:text-slate-300 mb-6">
-                            A comprehensive booking platform enabling users to search and book hotels, featuring a robust admin dashboard for property management.
-                        </p>
-                        <ul className="space-y-2 mb-6 text-sm text-slate-600 dark:text-slate-400">
-                            <li className="flex gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></div>Redux for complex global state management.</li>
-                            <li className="flex gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></div>Responsive UI built with Ant Design & Tailwind.</li>
-                            <li className="flex gap-2"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></div>Production-ready deployment on Vercel.</li>
-                        </ul>
-                        <div className="flex flex-wrap gap-2 mt-auto">
-                            {['React.js', 'Redux', 'Node.js', 'MongoDB', 'Ant Design', 'Tailwind'].map(tag => (
-                                <span key={tag} className="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded text-slate-600 dark:text-slate-300 font-mono">
-                                    {tag}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="p-6 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-700 flex gap-4">
-                        <a href="#" className="flex items-center gap-2 text-sm font-semibold hover:text-blue-600 transition-colors">
-                            <Github size={16} /> Source Code
-                        </a>
-                        <a href="#" className="flex items-center gap-2 text-sm font-semibold hover:text-blue-600 transition-colors">
-                            <ExternalLink size={16} /> Live Demo
-                        </a>
-                    </div>
-                </Card>
-
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-secondary border-b border-white/5" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#about" class="block hover:bg-slate-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">About</a>
+                <a href="#skills" class="block hover:bg-slate-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">Skills</a>
+                <a href="#projects" class="block hover:bg-slate-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">Projects</a>
+                <a href="#education" class="block hover:bg-slate-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">Education</a>
+                <a href="#contact" class="block text-primary font-bold px-3 py-2 text-base">Contact Me</a>
             </div>
         </div>
-      </section>
+    </nav>
 
-      {/* --- Education & Stats --- */}
-      <section id="education" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            
-            {/* Education Timeline */}
-            <div>
-                <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
-                    <span className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-blue-600"><BookOpen size={24}/></span>
-                    Education
-                </h2>
-                <div className="space-y-8 pl-4 border-l-2 border-slate-200 dark:border-slate-700">
-                    
-                    <div className="relative pl-8">
-                        <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-blue-500 ring-4 ring-white dark:ring-slate-900"></div>
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">B.Tech in Computer Science</h3>
-                        <p className="text-blue-600 dark:text-blue-400 font-medium">Pranveer Singh Institute of Technology, Kanpur</p>
-                        <div className="flex justify-between items-center mt-1 text-sm text-slate-500">
-                            <span>2022 – 2026</span>
-                            <span className="font-semibold text-slate-700 dark:text-slate-300">69.5%</span>
-                        </div>
-                    </div>
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center pt-16 relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
 
-                    <div className="relative pl-8">
-                        <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-slate-300 dark:bg-slate-600 ring-4 ring-white dark:ring-slate-900"></div>
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">Senior Secondary (XII) - Science</h3>
-                        <p className="text-slate-600 dark:text-slate-400 font-medium">Mary Lucas School and College</p>
-                        <div className="flex justify-between items-center mt-1 text-sm text-slate-500">
-                            <span>2021 – 2022</span>
-                            <span className="font-semibold text-slate-700 dark:text-slate-300">61.8%</span>
-                        </div>
-                    </div>
-
-                    <div className="relative pl-8">
-                        <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-slate-300 dark:bg-slate-600 ring-4 ring-white dark:ring-slate-900"></div>
-                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">Secondary (X)</h3>
-                        <p className="text-slate-600 dark:text-slate-400 font-medium">Mary Lucas School and College</p>
-                        <div className="flex justify-between items-center mt-1 text-sm text-slate-500">
-                            <span>2019 – 2020</span>
-                            <span className="font-semibold text-slate-700 dark:text-slate-300">62.7%</span>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            {/* Achievements & Stats */}
-            <div>
-                 <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
-                    <span className="p-2 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg text-yellow-600"><Award size={24}/></span>
-                    Achievements
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <Card className="p-6 border-l-4 border-l-blue-500">
-                        <div className="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">500+</div>
-                        <div className="text-sm text-slate-500 font-medium uppercase tracking-wide">Problems Solved on LeetCode</div>
-                    </Card>
-                    <Card className="p-6 border-l-4 border-l-yellow-500">
-                        <div className="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">5 Star</div>
-                        <div className="text-sm text-slate-500 font-medium uppercase tracking-wide">Coder on HackerRank</div>
-                    </Card>
-                </div>
-
-                <div className="mt-6 space-y-3">
-                    <div className="flex items-center gap-3 p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-700">
-                        <Award className="text-blue-500 shrink-0" size={20} />
-                        <span className="text-slate-700 dark:text-slate-300">Problem Solving (Basic) & (Intermediate) - HackerRank</span>
-                    </div>
-                    <div className="flex items-center gap-3 p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-700">
-                        <Award className="text-blue-500 shrink-0" size={20} />
-                        <span className="text-slate-700 dark:text-slate-300">SQL (Basic) Certificate - HackerRank</span>
-                    </div>
-                    <div className="flex items-center gap-3 p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-700">
-                        <Award className="text-blue-500 shrink-0" size={20} />
-                        <span className="text-slate-700 dark:text-slate-300">STHIRA (Semi-finalist) - UNISG</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-      </section>
-
-      {/* --- Contact Section --- */}
-      <section id="contact" className="py-20 bg-slate-900 text-white">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Let's Connect</h2>
-            <p className="text-slate-400 mb-12 max-w-xl mx-auto">
-                I am currently looking for internship opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <h2 class="text-primary font-medium tracking-wide mb-4">HELLO, I'M</h2>
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
+                Manvendra Singh
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-400 mb-8 max-w-3xl mx-auto leading-relaxed">
+                Motivated Computer Science Undergraduate & Full-Stack Developer
             </p>
+            <div class="flex items-center justify-center gap-2 text-slate-400 mb-10">
+                <i class="fas fa-map-marker-alt text-primary"></i>
+                <span>Prayagraj, Uttar Pradesh</span>
+            </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <a href="mailto:mirdulms.13@gmail.com" className="p-6 bg-slate-800 rounded-xl hover:bg-slate-700 transition-colors flex flex-col items-center gap-4">
-                    <div className="p-4 bg-blue-500/10 rounded-full text-blue-400"><Mail size={32}/></div>
-                    <div>
-                        <h3 className="font-semibold mb-1">Email Me</h3>
-                        <p className="text-slate-400 text-sm">mirdulms.13@gmail.com</p>
-                    </div>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#projects" class="px-8 py-3 bg-primary hover:bg-blue-600 text-white font-semibold rounded-lg transition-all transform hover:-translate-y-1 shadow-lg shadow-blue-500/20">
+                    View Projects
                 </a>
-                <a href="tel:+918576912393" className="p-6 bg-slate-800 rounded-xl hover:bg-slate-700 transition-colors flex flex-col items-center gap-4">
-                    <div className="p-4 bg-green-500/10 rounded-full text-green-400"><Phone size={32}/></div>
-                    <div>
-                        <h3 className="font-semibold mb-1">Call Me</h3>
-                        <p className="text-slate-400 text-sm">+91 8576912393</p>
-                    </div>
+                <a href="#" class="px-8 py-3 border border-slate-600 hover:border-white text-white font-semibold rounded-lg transition-all hover:bg-white/5">
+                    Download Resume <i class="fas fa-download ml-2"></i>
                 </a>
-                 <div className="p-6 bg-slate-800 rounded-xl flex flex-col items-center gap-4">
-                    <div className="p-4 bg-purple-500/10 rounded-full text-purple-400"><MapPin size={32}/></div>
-                    <div>
-                        <h3 className="font-semibold mb-1">Location</h3>
-                        <p className="text-slate-400 text-sm">Prayagraj, Uttar Pradesh, India</p>
+            </div>
+
+            <div class="mt-16 animate-bounce">
+                <a href="#about" class="text-slate-500 hover:text-white transition-colors">
+                    <i class="fas fa-chevron-down text-2xl"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">About Me</h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
+            </div>
+
+            <div class="max-w-4xl mx-auto glass-card p-8 rounded-2xl shadow-xl">
+                <p class="text-lg leading-relaxed text-slate-300 text-center">
+                    I am a motivated <strong class="text-white">Computer Science undergraduate</strong> seeking opportunities to apply strong problem-solving abilities, full-stack development skills, and data structures knowledge in a growth-oriented organization. I am passionate about continuously enhancing my technical and professional expertise to build impactful solutions.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-accent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Technical Skills</h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Languages -->
+                <div class="glass-card p-6 rounded-xl hover:bg-slate-800 transition-colors">
+                    <div class="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4 text-blue-400">
+                        <i class="fas fa-code text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">Languages</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>C / C++</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>JavaScript (ES6+)</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>SQL</li>
+                    </ul>
+                </div>
+
+                <!-- Frameworks -->
+                <div class="glass-card p-6 rounded-xl hover:bg-slate-800 transition-colors">
+                    <div class="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center mb-4 text-green-400">
+                        <i class="fas fa-layer-group text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">MERN Stack</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>React.js</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>Node.js & Express</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>MongoDB</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>HTML5 & CSS3</li>
+                    </ul>
+                </div>
+
+                <!-- Tools -->
+                <div class="glass-card p-6 rounded-xl hover:bg-slate-800 transition-colors">
+                    <div class="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4 text-purple-400">
+                        <i class="fas fa-tools text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">Tools</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center"><span class="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>Git & GitHub</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>VS Code</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>Postman (implied)</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>Vercel / Render</li>
+                    </ul>
+                </div>
+
+                <!-- Concepts -->
+                <div class="glass-card p-6 rounded-xl hover:bg-slate-800 transition-colors">
+                    <div class="w-12 h-12 bg-orange-500/10 rounded-lg flex items-center justify-center mb-4 text-orange-400">
+                        <i class="fas fa-brain text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">CS Concepts</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center"><span class="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>Data Structures</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>Algorithms</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>DBMS</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>OOPS</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-20 bg-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Education</h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
+            </div>
+
+            <div class="max-w-3xl mx-auto space-y-8">
+                <!-- Degree -->
+                <div class="relative pl-8 border-l-2 border-slate-700">
+                    <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-primary ring-4 ring-secondary"></div>
+                    <div class="bg-slate-800/50 p-6 rounded-lg hover:bg-slate-800 transition-all">
+                        <div class="flex flex-col md:flex-row justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white">B.Tech in Computer Science & Engineering</h3>
+                            <span class="text-primary font-mono">2022 - 2026</span>
+                        </div>
+                        <h4 class="text-lg text-slate-300 mb-2">Pranveer Singh Institute of Technology, Kanpur</h4>
+                        <p class="text-sm text-slate-400">Score: <span class="text-white font-semibold">69.5%</span></p>
+                    </div>
+                </div>
+
+                <!-- 12th -->
+                <div class="relative pl-8 border-l-2 border-slate-700">
+                    <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-slate-500 ring-4 ring-secondary"></div>
+                    <div class="bg-slate-800/50 p-6 rounded-lg hover:bg-slate-800 transition-all">
+                        <div class="flex flex-col md:flex-row justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white">Senior Secondary (XII) Science</h3>
+                            <span class="text-slate-400 font-mono">2021 - 2022</span>
+                        </div>
+                        <h4 class="text-lg text-slate-300 mb-2">Mary Lucas School and College, Prayagraj</h4>
+                        <p class="text-sm text-slate-400">Score: <span class="text-white font-semibold">61.8%</span></p>
+                    </div>
+                </div>
+
+                <!-- 10th -->
+                <div class="relative pl-8 border-l-2 border-slate-700">
+                    <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-slate-500 ring-4 ring-secondary"></div>
+                    <div class="bg-slate-800/50 p-6 rounded-lg hover:bg-slate-800 transition-all">
+                        <div class="flex flex-col md:flex-row justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white">Secondary (X)</h3>
+                            <span class="text-slate-400 font-mono">2019 - 2020</span>
+                        </div>
+                        <h4 class="text-lg text-slate-300 mb-2">Mary Lucas School and College, Prayagraj</h4>
+                        <p class="text-sm text-slate-400">Score: <span class="text-white font-semibold">62.7%</span></p>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div className="flex justify-center gap-8">
-                <a href="https://github.com" className="text-slate-400 hover:text-white transition-colors"><Github size={32} /></a>
-                <a href="https://linkedin.com" className="text-slate-400 hover:text-white transition-colors"><Linkedin size={32} /></a>
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-accent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Featured Projects</h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
             </div>
-            
-            <div className="mt-16 pt-8 border-t border-slate-800 text-slate-500 text-sm">
-                <p>© {new Date().getFullYear()} Manvendra Singh. All rights reserved.</p>
-                <p className="mt-2">Built with React & Tailwind CSS</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Project 1 -->
+                <div class="glass-card rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 group">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-2xl font-bold text-white group-hover:text-primary transition-colors">Virtual Assistant</h3>
+                            <div class="flex gap-2">
+                                <a href="#" class="text-slate-400 hover:text-white" title="GitHub"><i class="fab fa-github text-xl"></i></a>
+                                <a href="#" class="text-slate-400 hover:text-white" title="Live Demo"><i class="fas fa-external-link-alt text-xl"></i></a>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-900/50 text-blue-200 border border-blue-800">React.js</span>
+                            <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-900/50 text-blue-200 border border-blue-800">Node.js</span>
+                            <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-900/50 text-blue-200 border border-blue-800">MongoDB</span>
+                            <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-900/50 text-blue-200 border border-blue-800">Gemini API</span>
+                        </div>
+                        <ul class="space-y-3 text-slate-300 mb-6 list-disc list-inside">
+                            <li>Developed a full-stack AI-powered virtual assistant using MERN.</li>
+                            <li>Implemented secure authentication and RESTful APIs using JWT.</li>
+                            <li>Integrated Google Gemini API for intelligent assistant responses.</li>
+                            <li>Deployed a JARVIS-style assistant on <strong>Render</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="glass-card rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 group">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-2xl font-bold text-white group-hover:text-primary transition-colors">Hotel Booking System</h3>
+                            <div class="flex gap-2">
+                                <a href="#" class="text-slate-400 hover:text-white" title="GitHub"><i class="fab fa-github text-xl"></i></a>
+                                <a href="#" class="text-slate-400 hover:text-white" title="Live Demo"><i class="fas fa-external-link-alt text-xl"></i></a>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-900/50 text-blue-200 border border-blue-800">MERN</span>
+                            <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-900/50 text-blue-200 border border-blue-800">Redux</span>
+                            <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-900/50 text-blue-200 border border-blue-800">Tailwind</span>
+                        </div>
+                        <ul class="space-y-3 text-slate-300 mb-6 list-disc list-inside">
+                            <li>Built a full-stack hotel booking platform with an admin panel.</li>
+                            <li>Implemented Redux-based state management and RESTful APIs.</li>
+                            <li>Designed a responsive UI using Ant Design and Tailwind CSS.</li>
+                            <li>Deployed a production-ready application on <strong>Vercel</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-      </section>
+    </section>
 
-    </div>
-  );
-}
+    <!-- Achievements Section -->
+    <section class="py-20 bg-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Achievements & Certifications</h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Achievements List -->
+                <div class="bg-slate-800/50 p-8 rounded-2xl border border-white/5">
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center">
+                        <i class="fas fa-trophy text-yellow-500 mr-3"></i> Competitive Programming
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary mt-1 mr-3"></i>
+                            <div>
+                                <strong class="text-white block">LeetCode</strong>
+                                <span class="text-slate-400">Solved 500+ problems demonstrating strong DSA skills.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary mt-1 mr-3"></i>
+                            <div>
+                                <strong class="text-white block">HackerRank</strong>
+                                <span class="text-slate-400">Achieved 5-Star Coder status.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary mt-1 mr-3"></i>
+                            <div>
+                                <strong class="text-white block">STHIRA Competition</strong>
+                                <span class="text-slate-400">Semi-finalist (Certificate - UNISG).</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Certifications -->
+                <div class="bg-slate-800/50 p-8 rounded-2xl border border-white/5">
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center">
+                        <i class="fas fa-certificate text-blue-400 mr-3"></i> Certifications
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center p-3 bg-slate-900/50 rounded-lg border border-slate-700">
+                            <i class="fab fa-hackerrank text-2xl text-green-500 mr-4"></i>
+                            <div>
+                                <div class="text-white font-semibold">Problem Solving (Intermediate)</div>
+                                <div class="text-xs text-slate-500">HackerRank</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-3 bg-slate-900/50 rounded-lg border border-slate-700">
+                            <i class="fab fa-hackerrank text-2xl text-green-500 mr-4"></i>
+                            <div>
+                                <div class="text-white font-semibold">Problem Solving (Basic)</div>
+                                <div class="text-xs text-slate-500">HackerRank</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-3 bg-slate-900/50 rounded-lg border border-slate-700">
+                            <i class="fas fa-database text-2xl text-blue-500 mr-4"></i>
+                            <div>
+                                <div class="text-white font-semibold">SQL (Basic)</div>
+                                <div class="text-xs text-slate-500">HackerRank</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-accent relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Get In Touch</h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded-full mb-8"></div>
+                <p class="text-slate-400">Feel free to reach out for opportunities or collaborations.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Contact Info -->
+                <div class="space-y-8">
+                    <a href="mailto:mirdulms.13@gmail.com" class="flex items-center p-6 bg-slate-800/50 rounded-xl hover:bg-slate-800 transition-colors group">
+                        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                            <i class="fas fa-envelope text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-sm text-slate-400 font-semibold uppercase tracking-wide">Email</h4>
+                            <p class="text-white text-lg break-all">mirdulms.13@gmail.com</p>
+                        </div>
+                    </a>
+
+                    <a href="tel:+918576912393" class="flex items-center p-6 bg-slate-800/50 rounded-xl hover:bg-slate-800 transition-colors group">
+                        <div class="w-12 h-12 bg-green-500/10 rounded-full flex items-center justify-center text-green-500 group-hover:bg-green-500 group-hover:text-white transition-all">
+                            <i class="fas fa-phone-alt text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-sm text-slate-400 font-semibold uppercase tracking-wide">Phone</h4>
+                            <p class="text-white text-lg">+91-8576912393</p>
+                        </div>
+                    </a>
+
+                    <div class="flex gap-4 pt-4">
+                        <a href="#" class="flex-1 py-3 bg-[#0077b5] text-white rounded-lg text-center font-medium hover:opacity-90 transition-opacity">
+                            <i class="fab fa-linkedin mr-2"></i> LinkedIn
+                        </a>
+                        <a href="#" class="flex-1 py-3 bg-[#333] text-white rounded-lg text-center font-medium hover:opacity-90 transition-opacity">
+                            <i class="fab fa-github mr-2"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Simple Form -->
+                <form class="space-y-4" onsubmit="event.preventDefault(); alert('Thank you for reaching out! (This is a demo form)');">
+                    <div>
+                        <input type="text" placeholder="Your Name" class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-lg focus:outline-none focus:border-primary text-white placeholder-slate-500 transition-colors" required>
+                    </div>
+                    <div>
+                        <input type="email" placeholder="Your Email" class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-lg focus:outline-none focus:border-primary text-white placeholder-slate-500 transition-colors" required>
+                    </div>
+                    <div>
+                        <textarea rows="4" placeholder="Your Message" class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-lg focus:outline-none focus:border-primary text-white placeholder-slate-500 transition-colors" required></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-primary hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-all transform hover:-translate-y-1">
+                        Send Message <i class="fas fa-paper-plane ml-2"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-secondary border-t border-white/5 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-slate-400 text-sm">
+                &copy; <span id="year"></span> Manvendra Singh. All rights reserved.
+            </p>
+            <p class="text-slate-500 text-sm mt-2 md:mt-0 flex items-center">
+                Built with <i class="fas fa-heart text-red-500 mx-1"></i> and hosted on GitHub Pages
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Add scroll animation for Navbar
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 0) {
+                nav.classList.add('shadow-lg');
+            } else {
+                nav.classList.remove('shadow-lg');
+            }
+        });
+    </script>
+</body>
+</html>
